@@ -1,6 +1,8 @@
 import Money from "@/views/Money.vue";
 import Label from "@/views/Labels.vue";
 import Statistics from "@/views/Statistics.vue";
+import Notfound from "@/views/Notfound.vue";
+
 import Vue from "vue";
 import VueRouter from "vue-router";
 
@@ -23,10 +25,10 @@ const routes = [
     path: "/statistics",
     component: Statistics,
   },
-  // {
-  //   path: "*",
-  //   component: NotFound,
-  // },
+  {
+    path: "*",
+    component: Notfound,
+  },
 
 ];
 
