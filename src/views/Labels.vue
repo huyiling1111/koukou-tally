@@ -1,7 +1,9 @@
 <template>
   <div>
-    Labels
-    <Nav />
+    <Layout>
+      <div class="content">Labels</div>
+      <Nav />
+    </Layout>
   </div>
 </template>
 
