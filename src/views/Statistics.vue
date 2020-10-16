@@ -1,9 +1,14 @@
 <template>
-  <div>Statistics</div>
+  <div>
+    Statistics
+    <Nav />
+  </div>
 </template>
 
 <script lang="ts">
-export default {};
+export default {
+  name: "Statistics",
+};
 </script>
 
 <style lang="scss" scoped>
