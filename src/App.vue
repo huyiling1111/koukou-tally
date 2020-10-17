@@ -11,4 +11,8 @@ body {
   margin: 0px;
   box-sizing: border-box;
 }
+a {
+  text-decoration: none;
+  color: black;
+}
 </style>
