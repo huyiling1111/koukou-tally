@@ -2,7 +2,6 @@
   <div>
     <Layout>
       <div class="content">Labels</div>
-      <Nav />
     </Layout>
   </div>
 </template>

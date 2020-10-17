@@ -1,12 +1,12 @@
 <template>
   <div class="nav">
-    <router-link class="item" to="/money">
+    <router-link class="item" to="/money" active-class="selected">
       <Icons name="money"></Icons>记账</router-link
     >
-    <router-link class="item" to="/labels">
+    <router-link class="item" to="/labels" active-class="selected">
       <Icons name="labels"></Icons>标签</router-link
     >
-    <router-link class="item" to="/statistics"
+    <router-link class="item" to="/statistics" active-class="selected"
       ><Icons name="statistics"></Icons>统计
     </router-link>
   </div>
@@ -27,8 +27,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/styles/helper.scss";
 .nav {
-  // border: 1px solid red;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: row;
@@ -40,6 +40,14 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+  }
+  .icon {
+    width: 35px;
+    height: 35px;
+    color: red;
+  }
+  > .item.selected {
+    color: $color-highlight;
   }
 }
 </style>

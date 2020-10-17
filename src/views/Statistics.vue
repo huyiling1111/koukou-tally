@@ -2,7 +2,6 @@
   <div>
     <Layout>
       <div class="content">Statistics</div>
-      <Nav />
     </Layout>
   </div>
 </template>

@@ -1,6 +1,7 @@
 <template>
-  <div class="nav-wrapper">
+  <div class="layout-wrapper">
     <slot></slot>
+    <Nav />
   </div>
 </template>
 
@@ -9,7 +10,7 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-.nav-wrapper {
+.layout-wrapper {
   border: 1px solid green;
   display: flex;
   flex-direction: column;
