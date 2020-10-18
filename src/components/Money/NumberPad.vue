@@ -1,29 +1,68 @@
 <template>
   <div>
     <div class="numberPad">
-      <input class="output" type="text" />
+      <input class="output" type="text" v-model="output" />
       <div class="buttons">
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>删除</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>清空</button>
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button class="ok">ok</button>
-        <button class="zero">0</button>
-        <button>.</button>
+        <button @click="inputContent">1</button>
+        <button @click="inputContent">2</button>
+        <button @click="inputContent">3</button>
+        <button @click="remove">删除</button>
+        <button @click="inputContent">4</button>
+        <button @click="inputContent">5</button>
+        <button @click="inputContent">6</button>
+        <button @click="clear">清空</button>
+        <button @click="inputContent">7</button>
+        <button @click="inputContent">8</button>
+        <button @click="inputContent">9</button>
+        <button @click="ok" class="ok">ok</button>
+        <button class="zero" @click="inputContent">0</button>
+        <button @click="inputContent">.</button>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-export default {};
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
+
+@Component
+export default class NumberPad extends Vue {
+  output = "0";
+  inputContent(event: MouseEvent) {
+    const button = event.target as HTMLButtonElement;
+    const input = button.textContent as string;
+    console.log(input);
+    if (this.output.length > 16) {
+      return;
+    }
+    if (this.output === "0") {
+      if ("0123456789".indexOf(input) >= 0) {
+        this.output = input;
+        return;
+      }
+    }
+    if (this.output.indexOf(".") > 0) {
+      if (input === ".") {
+        return;
+      }
+    }
+
+    this.output += input;
+  }
+  remove() {
+    if (this.output.length === 1) {
+      this.output = "0";
+    } else {
+      this.output = this.output.slice(0, -1);
+      console.log(1);
+    }
+  }
+  clear() {
+    this.output = "0";
+  }
+  ok() {}
+}
 </script>
 
 <style lang="scss" scoped>
@@ -61,3 +100,6 @@ export default {};
   }
 }
 </style>
+
+
+
