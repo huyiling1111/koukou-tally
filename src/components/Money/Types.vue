@@ -2,14 +2,16 @@
   <div>
     <ul class="types">
       <li
-        :class="type === '-' ? 'seleted' : ''"
-        @click="selectType({ type: '-' })"
+        :class="type === '-' ? 'selected' : ''"
+        @click="selectType('-')"
+        key="-"
       >
         支出
       </li>
       <li
-        :class="type === '+' ? 'seleted' : ''"
-        @click="selectType({ type: '+' })"
+        :class="type === '+' ? 'selected' : ''"
+        @click="selectType('+')"
+        key="+"
       >
         收入
       </li>
@@ -17,25 +19,22 @@
   </div>
 </template>
 
-<script >
-export default {
-  data() {
-    return {
-      type: "-"
+<script lang="ts" >
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
+@Component
+export default class Types extends Vue {
+  // @Prop(Number) xxx: number | undefined;
+  type = "-";
+
+  selectType(type: string) {
+    if (type !== "-" && type !== "+") {
+      throw new Error("type is unknown");
     }
-  },
-  methods: {
-    selectType(type) {
-
-      this.type = type
-      console.log(this.type)
-
-    }
-
+    //  点击时为"-"或者"+" , 动态绑定class：selected
+    this.type = type;
   }
-
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -57,7 +56,8 @@ export default {
     align-items: center;
     justify-content: center;
     &.selected {
-      background: red;
+      background: white;
+      color: $color-highlight;
     }
   }
 }
