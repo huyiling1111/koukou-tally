@@ -12,6 +12,7 @@
         <Notes v-on:update:value="onUpdateNotes" />
         <NumberPad v-on:update:value="onUpdateNumberPad" @submit="saveRecord" />
       </div>
+      <!-- {{ recordList }} -->
     </Layout>
   </div>
 </template>
@@ -23,25 +24,17 @@ import Notes from "@/components/Money/Notes.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
+import model from "@/model.ts";
+console.log(model.fetch);
 
-// 声明类型
-type Record = {
-  tags: string[];
-  notes: string;
-  type: string;
-  amount: number;
-};
 @Component({
   components: { Tags, Notes, Types, NumberPad },
 })
 export default class Money extends Vue {
   tags = ["衣", "食", "住", "行"];
-  record: Record = { tags: [], notes: "", type: "-", amount: 0 };
+  record: Recordist = { tags: [], notes: "", type: "-", amount: 0 };
   //声明一个记录数组把记录存入localStorage里
-  recordList: Record[] = JSON.parse(
-    window.localStorage.getItem("recordList") || "[]"
-  );
-
+  recordList: Recordist[] = model.fetch();
   onUpdateTypes(value: string) {
     this.record.type = value;
     console.log(value);
@@ -56,10 +49,10 @@ export default class Money extends Vue {
     this.record.amount = parseFloat(value);
   }
   saveRecord() {
-    const record2 = JSON.parse(JSON.stringify(this.record));
+    const record2: Recordist = model.deepClone(this.record);
     record2.createAt = new Date();
     this.recordList.push(record2);
-    localStorage.setItem("recordList", JSON.stringify(this.recordList));
+    model.save(this.recordList);
   }
 }
 </script>

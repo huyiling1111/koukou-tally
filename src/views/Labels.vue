@@ -1,11 +1,15 @@
 <template>
   <div>
     <Layout>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div>1</div>
-      <div class="content">Labels</div>
+      <ol>
+        <li><span>衣</span><icon class="right"></icon></li>
+        <li><span>食</span><icon class="right"></icon></li>
+        <li><span>住</span><icon class="right"></icon></li>
+        <li><span>行</span><icon class="right"></icon></li>
+      </ol>
+      <div>
+        <button>新建标签</button>
+      </div>
     </Layout>
   </div>
 </template>
