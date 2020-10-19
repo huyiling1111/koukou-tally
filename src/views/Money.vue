@@ -25,16 +25,16 @@ import NumberPad from "@/components/Money/NumberPad.vue";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import model from "@/model.ts";
-console.log(model.fetch);
 
+const recordList = model.fetch();
 @Component({
   components: { Tags, Notes, Types, NumberPad },
 })
 export default class Money extends Vue {
   tags = ["衣", "食", "住", "行"];
-  record: Recordist = { tags: [], notes: "", type: "-", amount: 0 };
+  record: RecordItem = { tags: [], notes: "", type: "-", amount: 0 };
   //声明一个记录数组把记录存入localStorage里
-  recordList: Recordist[] = model.fetch();
+  recordList: RecordItem[] = recordList;
   onUpdateTypes(value: string) {
     this.record.type = value;
     console.log(value);
@@ -49,8 +49,8 @@ export default class Money extends Vue {
     this.record.amount = parseFloat(value);
   }
   saveRecord() {
-    const record2: Recordist = model.deepClone(this.record);
-    record2.createAt = new Date();
+    const record2: RecordItem = model.clone(this.record);
+    record2.createdAt = new Date();
     this.recordList.push(record2);
     model.save(this.recordList);
   }
