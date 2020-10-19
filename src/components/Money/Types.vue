@@ -2,14 +2,14 @@
   <div>
     <ul class="types">
       <li
-        :class="type === '-' ? 'selected' : ''"
+        :class="value === '-' ? 'selected' : ''"
         @click="selectType('-')"
         key="-"
       >
         支出
       </li>
       <li
-        :class="type === '+' ? 'selected' : ''"
+        :class="value === '+' ? 'selected' : ''"
         @click="selectType('+')"
         key="+"
       >
@@ -21,18 +21,16 @@
 
 <script lang="ts" >
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 @Component
 export default class Types extends Vue {
-  // @Prop(Number) xxx: number | undefined;
-  type = "-";
+  @Prop(String) readonly value!: string;
 
-  selectType(type: string) {
-    if (type !== "-" && type !== "+") {
+  selectType(value: string) {
+    if (value !== "-" && value !== "+") {
       throw new Error("type is unknown");
     }
-    //  点击时为"-"或者"+" , 动态绑定class：selected
-    this.type = type;
+    this.$emit("update:value", value);
   }
 }
 </script>
