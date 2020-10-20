@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg class="icon1">
+    <svg class="icon">
       <use :xlink:href="'#' + name" />
     </svg>
   </div>
@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon1 {
+.icon {
   width: 2.8em;
   height: 2.8em;
   vertical-align: -0.15em;

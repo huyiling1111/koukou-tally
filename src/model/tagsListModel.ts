@@ -1,9 +1,15 @@
+type tag = {
+    id: string
+    name: string
+}
+
+
 type tagsListModel = {
     localStorageKeyName: string
-    data: string[]
+    data: tag[]
     create: (label: string) => 'repeat' | 'success'
-    fetch: () => string[]
-    save: (data: string[]) => void
+    fetch: () => tag[]
+    save: (data: tag[]) => void
 }
 
 const tagsListModel: tagsListModel = {
@@ -11,19 +17,14 @@ const tagsListModel: tagsListModel = {
     data: [],
 
     create(label: string) {
-
-
-        if (this.data.indexOf(label) > -1) {
+        const newData = this.data.map(item => item.name)
+        if (newData.indexOf(label) > -1) {
             return "repeat"
         } else {
-            this.data.push(label);
-            tagsListModel.save(this.data);
+            this.data.push({ 'id': label, 'name': label });
+            this.save(this.data);
             return "success"
         }
-
-
-
-
 
     },
 
@@ -34,7 +35,7 @@ const tagsListModel: tagsListModel = {
 
 
     },
-    save(data: string[]) {
+    save(data: tag[]) {
         window.localStorage.setItem(this.localStorageKeyName, JSON.stringify(data))
 
     }

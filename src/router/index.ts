@@ -2,6 +2,7 @@ import Money from "@/views/Money.vue";
 import Label from "@/views/Labels.vue";
 import Statistics from "@/views/Statistics.vue";
 import Notfound from "@/views/Notfound.vue";
+import EditLabel from "@/views/EditLabel.vue";
 
 import Vue from "vue";
 import VueRouter from "vue-router";
@@ -20,6 +21,11 @@ const routes = [
   {
     path: "/labels",
     component: Label,
+
+  },
+  {
+    path: "/labels/edit/:id",
+    component: EditLabel,
   },
   {
     path: "/statistics",

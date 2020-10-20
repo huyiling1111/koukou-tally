@@ -1,18 +1,18 @@
 <template>
   <div class="wrap">
     <Layout>
-      <ol class="labels">
-        <li v-for="item in tagsList" :key="item">
-          <span>{{ item }}</span
+      <div class="labels">
+        <router-link
+          class="label"
+          :to="`/labels/edit/${item.id}`"
+          v-for="item in tagsList"
+          :key="item.id"
+        >
+          <span>{{ item.name }}</span
           ><Icons class="icon2" name="right" />
-        </li>
-      </ol>
-
-      <div class="createButton-wrapper">
-        <div>
-          <button @click="create" class="createButton">新建标签</button>
-        </div>
+        </router-link>
       </div>
+      <Button @click="create">新建标签</Button>
     </Layout>
   </div>
 </template>
@@ -23,9 +23,12 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import tagsListModel from "@/model/tagsListModel.ts";
-@Component
+import Button from "@/components/Button.vue";
+@Component({
+  components: { Button },
+})
 export default class Labels extends Vue {
-  tagsList: string[] = tagsListModel.data;
+  tagsList = tagsListModel.data;
   create() {
     const label = window.prompt("请输入想要新增的标签");
     if (label) {
@@ -50,7 +53,7 @@ export default class Labels extends Vue {
   font-size: 20px;
   display: flex;
   flex-direction: column;
-  > li {
+  > .label {
     background: white;
     border-bottom: 1px solid #dad8d8e0;
     padding: 0 16px;
@@ -64,21 +67,6 @@ export default class Labels extends Vue {
       display: flex;
       align-items: center;
     }
-  }
-}
-.createButton-wrapper {
-  width: 100px;
-  margin-left: 50%;
-  margin-bottom: 80%;
-  transform: translate(-50%, -50%);
-  border: 1px solid $color-highlight;
-  .createButton {
-    margin-right: auto;
-    background: white;
-    border: none;
-    color: $color-highlight;
-    border-radius: 4px;
-    padding: 8px 16px;
   }
 }
 </style>
