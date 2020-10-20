@@ -12,7 +12,7 @@
         <Notes v-on:update:value="onUpdateNotes" />
         <NumberPad v-on:update:value="onUpdateNumberPad" @submit="saveRecord" />
       </div>
-      {{ recordList }}
+      {{ tags }}
     </Layout>
   </div>
 </template>
@@ -24,15 +24,16 @@ import Notes from "@/components/Money/Notes.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import model from "@/model.ts";
-
-const recordList: RecordItem[] = model.fetch();
+import recordListmodel from "@/model/recordListmodel.ts";
+import tagsListModel from "@/model/tagsListModel.ts";
 @Component({
   components: { Tags, Notes, Types, NumberPad },
 })
 export default class Money extends Vue {
-  tags = ["衣", "食", "住", "行"];
+  tags = tagsListModel.fetch();
+
   record: RecordItem = { tags: [], notes: "", type: "-", amount: 0 };
+  recordList: RecordItem[] = recordListmodel.fetch();
 
   onUpdateTypes(value: string) {
     this.record.type = value;
@@ -48,10 +49,10 @@ export default class Money extends Vue {
     this.record.amount = parseFloat(value);
   }
   saveRecord() {
-    const record2: RecordItem = model.clone(this.record);
+    const record2: RecordItem = recordListmodel.clone(this.record);
     record2.createdAt = new Date();
-    recordList.push(record2);
-    model.save(recordList);
+    this.recordList.push(record2);
+    recordListmodel.save(this.recordList);
   }
 }
 </script>
