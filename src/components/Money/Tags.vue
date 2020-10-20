@@ -5,7 +5,7 @@
         <div
           :class="{ selected: selectTags.indexOf(item) >= 0 }"
           v-for="item in dataSource"
-          :key="item"
+          :key="item.id"
           @click="toggle(item)"
         >
           {{ item.name }}
