@@ -3,15 +3,15 @@
     <Layout>
       <div class="content">
         <div class="editTag">
-          <Icons class="icon3" name="Left" /><span>编辑标签</span>
+          <router-link :to="'/labels'"
+            ><Icons class="icon3" name="Left" /> </router-link
+          ><span>编辑标签</span>
         </div>
-
-        <div>标签名</div>
+        <Notes class="notes" comment="标签名" placeHolder="请输入标签名" />
         <div>
-          <Button>删除标签</Button>
+          <Button class="button">删除标签</Button>
         </div>
       </div>
-      <Notes comment="备注" placeHolder="请输入" />
     </Layout>
   </div>
 </template>
@@ -45,22 +45,40 @@ export default class EditLabel extends Vue {
 
 <style  lang="scss" scoped>
 .content {
+  background: rgb(248, 248, 248);
   font-size: 24px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   > .editTag {
-    padding: 5px 5px;
+    background: white;
+    padding: 12px 50% 12px 16px;
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    span {
+      transform: translateX(50%);
+    }
 
     .icon3 {
-      margin-right: 20px;
       width: 1.2em;
-      height: 1.6em;
+      height: 1.5em;
       display: flex;
       align-items: center;
     }
   }
+
+  .notes {
+    background: white;
+    margin-top: 20px;
+    height: 60px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+  }
+}
+.button {
+  margin-top: 70px;
+  font-size: 16px;
 }
 </style>
