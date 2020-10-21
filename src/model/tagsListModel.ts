@@ -1,3 +1,5 @@
+import createId from '@/lib/created'
+
 type tag = {
     id: string
     name: string
@@ -20,10 +22,12 @@ const tagsListModel: tagsListModel = {
 
     create(label: string) {
         const newData = this.data.map(item => item.name)
+
         if (newData.indexOf(label) > -1) {
             return "repeat"
         } else {
-            this.data.push({ 'id': label, 'name': label });
+            const id = createId().toString()
+            this.data.push({ 'id': id, 'name': label });
             this.save(this.data);
             return "success"
         }
