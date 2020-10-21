@@ -8,7 +8,7 @@
           :key="item.id"
           @click="toggle(item)"
         >
-          {{ item.name }}
+          {{ item }}
         </div>
       </div>
       <div class="new">
