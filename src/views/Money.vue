@@ -13,9 +13,11 @@
           :comment="comment"
           :placeHolder="placeHolder"
           v-on:update:value="onUpdateNotes"
+          :value="values"
         />
         <NumberPad v-on:update:value="onUpdateNumberPad" @submit="saveRecord" />
       </div>
+      {{ record }}
     </Layout>
   </div>
 </template>
@@ -36,6 +38,7 @@ export default class Money extends Vue {
   tags = tagsListModel.fetch();
   comment = "备注:";
   placeHolder = "请输入备注哈内容";
+  values = "";
 
   record: RecordItem = { tags: [], notes: "", type: "-", amount: 0 };
   recordList: RecordItem[] = recordListmodel.fetch();

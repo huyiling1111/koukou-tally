@@ -7,7 +7,14 @@
             ><Icons class="icon3" name="Left" /> </router-link
           ><span>编辑标签</span>
         </div>
-        <Notes class="notes" comment="标签名" placeHolder="请输入标签名" />
+        <Notes
+          class="notes"
+          comment="标签名"
+          placeHolder="请输入标签名"
+          :value="editTag.name"
+          @update:value="update"
+        />
+
         <div>
           <Button class="button">删除标签</Button>
         </div>
@@ -18,7 +25,6 @@
 
 <script lang="ts">
 import tagsListModel from "@/model/tagsListModel.ts";
-tagsListModel.fetch();
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Notes from "@/components/Money/Notes.vue";
@@ -26,16 +32,30 @@ import Button from "@/components/Button.vue";
 
 @Component({ components: { Notes, Button } })
 export default class EditLabel extends Vue {
-  created() {
-    // console.log(1);
+  editTag?: { id: string; name: string } = undefined;
+  update(value: string) {
     const id = this.$route.params.id;
-    console.log(`id:${id}`);
+    tagsListModel.fetch();
     const tags = tagsListModel.data;
-    console.log(`tags:${tags}`);
+
+    if (this.editTag) {
+      console.log(tags.filter((item) => item.id === id)[0].name, "fuck");
+      console.log(value);
+      tags.filter((item) => item.id === id)[0].name = value;
+      tagsListModel.save(tags);
+    }
+  }
+  created() {
+    const id = this.$route.params.id;
+    // console.log(`id:${id}`);
+    tagsListModel.fetch();
+    const tags = tagsListModel.data;
+    // console.log(`tags:${tags}`);
     const tag = tags.filter((item) => item.id === id)[0];
-    console.log(`tag:${tag}`);
+    // console.log(`tag:${tag}`);
     if (tag) {
-      console.log(tag.id);
+      this.editTag = tag;
+      console.log(tag);
     } else {
       this.$router.replace("/404");
     }

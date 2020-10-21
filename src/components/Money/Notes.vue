@@ -2,22 +2,28 @@
   <div>
     <div class="nodes">
       <span class="name"> {{ comment }}</span>
-      <input type="text" :placeholder="placeHolder" v-model="value" />
+      <input
+        type="text"
+        :placeholder="placeHolder"
+        :value="value"
+        @input="onInputValue($event.target.value)"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Prop, Watch } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 @Component
 export default class Notes extends Vue {
   @Prop(String) readonly comment: string | undefined;
   @Prop(String) readonly placeHolder: string | undefined;
-  value = "";
-  @Watch("value")
-  onValueChanged(value: string) {
+  @Prop(String) readonly value: string | undefined;
+
+  onInputValue(value: string) {
     this.$emit("update:value", value);
+    // console.log(value);
   }
 }
 </script>

@@ -29,6 +29,7 @@ export default class Tags extends Vue {
   selectTags: string[] = [];
 
   toggle(item: string) {
+    console.log(this.dataSource);
     if (this.selectTags.indexOf(item) > -1) {
       this.selectTags.splice(this.selectTags.indexOf(item), 1);
     } else {
