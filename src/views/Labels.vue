@@ -8,7 +8,7 @@
           v-for="item in tagsList"
           :key="item.id"
         >
-          <span>{{ item.name }}</span
+          <span>{{ item }}</span
           ><Icons class="icon2" name="right" />
         </router-link>
       </div>
@@ -24,11 +24,11 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import tagsListModel from "@/model/tagsListModel.ts";
 import Button from "@/components/Button.vue";
+tagsListModel.fetch();
 @Component({
   components: { Button },
 })
 export default class Labels extends Vue {
-  // console.log()
   tagsList = tagsListModel.data;
   create() {
     const label = window.prompt("请输入想要新增的标签");

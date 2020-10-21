@@ -16,7 +16,7 @@
         />
 
         <div>
-          <Button class="button">删除标签</Button>
+          <Button class="button" @click="remove">删除标签</Button>
         </div>
       </div>
     </Layout>
@@ -51,6 +51,14 @@ export default class EditLabel extends Vue {
       // console.log(tag);
     } else {
       this.$router.replace("/404");
+    }
+  }
+  remove() {
+    const message = window.confirm("确定要删除么？");
+    if (this.editTag && message && tagsListModel.remove(this.editTag.id)) {
+      this.$router.replace("/labels");
+    } else {
+      window.alert("删除失败");
     }
   }
 }
