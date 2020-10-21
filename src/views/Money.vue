@@ -30,12 +30,12 @@ import NumberPad from "@/components/Money/NumberPad.vue";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import recordListmodel from "@/model/recordListmodel.ts";
-import tagsListModel from "@/model/tagsListModel.ts";
+// import tagsListModel from "@/model/tagsListModel.ts";
 @Component({
   components: { Tags, Notes, Types, NumberPad },
 })
 export default class Money extends Vue {
-  tags = tagsListModel.fetch();
+  tags = window.tagList;
   comment = "备注:";
   placeHolder = "请输入备注哈内容";
   values = "";

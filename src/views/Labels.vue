@@ -29,7 +29,7 @@ tagsListModel.fetch();
   components: { Button },
 })
 export default class Labels extends Vue {
-  tagsList = tagsListModel.data;
+  tagsList = window.tagList;
   create() {
     const label = window.prompt("请输入想要新增的标签");
     if (label) {
