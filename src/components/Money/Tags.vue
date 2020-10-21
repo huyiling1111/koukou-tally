@@ -29,7 +29,7 @@ export default class Tags extends Vue {
   selectTags: string[] = [];
 
   toggle(item: string) {
-    console.log(this.dataSource);
+    console.log(`${this.dataSource}datasourse`);
     if (this.selectTags.indexOf(item) > -1) {
       this.selectTags.splice(this.selectTags.indexOf(item), 1);
     } else {
@@ -39,7 +39,7 @@ export default class Tags extends Vue {
   }
   create() {
     const name = window.prompt("请输入标签名");
-    console.log(typeof name);
+    console.log(name);
     if (this.dataSource) {
       this.$emit("update:createTag", [...this.dataSource, name]);
     }

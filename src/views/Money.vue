@@ -4,7 +4,7 @@
       <div class="content">
         <Types :value="record.type" v-on:update:value="onUpdateTypes" />
         <Tags
-          :data-source="tags"
+          :dataSource="tags"
           class="type1"
           v-on:update:createTag="tags = $event"
           v-on:update:selected="onUpdateTags"
@@ -45,10 +45,11 @@ export default class Money extends Vue {
 
   onUpdateTypes(value: string) {
     this.record.type = value;
-    console.log(value);
+    console.log(`tags${this.tags}`);
   }
   onUpdateTags(value: string[]) {
     this.record.tags = value;
+    console.log(this.record, "value");
   }
   onUpdateNotes(value: string) {
     this.record.notes = value;

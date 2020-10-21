@@ -28,6 +28,7 @@ import Button from "@/components/Button.vue";
   components: { Button },
 })
 export default class Labels extends Vue {
+  // console.log()
   tagsList = tagsListModel.data;
   create() {
     const label = window.prompt("请输入想要新增的标签");
@@ -36,6 +37,7 @@ export default class Labels extends Vue {
         alert("输入的标签名重复了");
       } else {
         tagsListModel.create(label);
+        //这里少了id
       }
     } else {
       alert("不能为空");

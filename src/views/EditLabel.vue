@@ -34,15 +34,8 @@ import Button from "@/components/Button.vue";
 export default class EditLabel extends Vue {
   editTag?: { id: string; name: string } = undefined;
   update(value: string) {
-    const id = this.$route.params.id;
-    tagsListModel.fetch();
-    const tags = tagsListModel.data;
-
     if (this.editTag) {
-      console.log(tags.filter((item) => item.id === id)[0].name, "fuck");
-      console.log(value);
-      tags.filter((item) => item.id === id)[0].name = value;
-      tagsListModel.save(tags);
+      tagsListModel.update(this.editTag.id, value);
     }
   }
   created() {
@@ -55,7 +48,7 @@ export default class EditLabel extends Vue {
     // console.log(`tag:${tag}`);
     if (tag) {
       this.editTag = tag;
-      console.log(tag);
+      // console.log(tag);
     } else {
       this.$router.replace("/404");
     }
