@@ -25,7 +25,7 @@ import { Component } from "vue-property-decorator";
 // import tagsListModel from "@/model/tagsListModel.ts";
 import Button from "@/components/Button.vue";
 import tagStore from "@/store/tagStore.ts";
-
+tagStore.fetchTag();
 @Component({
   components: { Button },
 })
