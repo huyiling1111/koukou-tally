@@ -12,7 +12,7 @@ Vue.component('Nav', Nav)
 Vue.component('Layout', Layout)
 Vue.component('Icons', Icons)
 window.tagList = tagsListModel.fetch()
-window.createTag = function (name) {
+window.createTag = (name) => {
   if (name) {
     if (tagsListModel.create(name) === "repeat") {
       alert("输入的标签名重复了");
@@ -23,6 +23,18 @@ window.createTag = function (name) {
   } else {
     alert("不能为空");
   }
+}
+window.removeTag = (id: string) => {
+  const message = window.confirm("确定要删除么？");
+
+  if (message && tagsListModel.remove(id)) {
+    return true
+  } else {
+    return false
+  }
+}
+window.updateTag = (id: string, name: string) => {
+  return tagsListModel.update(id, name)
 }
 new Vue({
   router,

@@ -35,7 +35,7 @@ export default class EditLabel extends Vue {
   editTag?: { id: string; name: string } = undefined;
   update(value: string) {
     if (this.editTag) {
-      tagsListModel.update(this.editTag.id, value);
+      window.updateTag(this.editTag.id, value);
     }
   }
   created() {
@@ -54,8 +54,8 @@ export default class EditLabel extends Vue {
     }
   }
   remove() {
-    const message = window.confirm("确定要删除么？");
-    if (this.editTag && message && tagsListModel.remove(this.editTag.id)) {
+    if (this.editTag && window.removeTag(this.editTag.id)) {
+      window.alert("删除成功");
       this.$router.replace("/labels");
     } else {
       window.alert("删除失败");

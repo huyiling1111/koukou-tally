@@ -37,8 +37,6 @@ export default class Labels extends Vue {
 }
 </script>
 
-
-
 <style lang="scss" scoped>
 @import "~@/assets/styles/helper.scss";
 .labels {
