@@ -8,7 +8,7 @@
           :key="item.id"
           @click="toggle(item)"
         >
-          {{ item }}
+          {{ item.name }}
         </div>
       </div>
       <div class="new">
@@ -22,14 +22,21 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
-@Component
+import { Component } from "vue-property-decorator";
+import tagStore from "@/store/tagStore.ts";
+
+@Component({
+  computed: {
+    dataSource() {
+      return tagStore.fetchTag();
+    },
+  },
+})
 export default class Tags extends Vue {
-  @Prop() readonly dataSource: string[] | undefined;
   selectTags: string[] = [];
+  dataSource = tagStore.fetchTag();
 
   toggle(item: string) {
-    console.log(`${this.dataSource}datasourse`);
     if (this.selectTags.indexOf(item) > -1) {
       this.selectTags.splice(this.selectTags.indexOf(item), 1);
     } else {
@@ -39,9 +46,10 @@ export default class Tags extends Vue {
   }
   create() {
     const name = window.prompt("请输入标签名");
-    console.log(name);
-    if (this.dataSource) {
-      this.$emit("update:createTag", [...this.dataSource, name]);
+    if (name) {
+      tagStore.createTag(name);
+    } else {
+      window.alert("不能为空");
     }
   }
 }

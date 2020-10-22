@@ -69,7 +69,7 @@ const tagStore = {
     }
 
 }
-console.log(tagStore.tagList)
+
 export default tagStore
 
 

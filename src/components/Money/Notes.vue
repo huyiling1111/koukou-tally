@@ -23,7 +23,6 @@ export default class Notes extends Vue {
 
   onInputValue(value: string) {
     this.$emit("update:value", value);
-    // console.log(value);
   }
 }
 </script>

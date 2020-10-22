@@ -8,7 +8,7 @@
           v-for="item in tagsList"
           :key="item.id"
         >
-          <span>{{ item }}</span
+          <span>{{ item.name }}</span
           ><Icons class="icon2" name="right" />
         </router-link>
       </div>
