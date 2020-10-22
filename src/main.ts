@@ -6,6 +6,7 @@ import Icons from '@/components/Icons.vue'
 import router from './router'
 import store from './store'
 import tagsListModel from './model/tagsListModel'
+import recordListmodel from './model/recordListmodel'
 
 Vue.config.productionTip = false
 Vue.component('Nav', Nav)
@@ -38,6 +39,10 @@ window.updateTag = (id: string, name: string) => {
 }
 window.findTag = (id: string) => {
   return window.tagList.filter((item) => item.id === id)[0]
+}
+window.recordList = recordListmodel.fetch()
+window.createRecord = (record) => {
+  recordListmodel.create(record);
 }
 new Vue({
   router,

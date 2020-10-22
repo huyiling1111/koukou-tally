@@ -41,7 +41,7 @@ export default class Money extends Vue {
   values = "";
 
   record: RecordItem = { tags: [], notes: "", type: "-", amount: 0 };
-  recordList: RecordItem[] = recordListmodel.fetch();
+  recordList = window.recordList;
 
   onUpdateTypes(value: string) {
     this.record.type = value;
@@ -58,7 +58,7 @@ export default class Money extends Vue {
     this.record.amount = parseFloat(value);
   }
   saveRecord() {
-    recordListmodel.create(this.record);
+    window.createRecord(this.record);
   }
 }
 </script>

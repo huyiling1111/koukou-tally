@@ -22,8 +22,10 @@ type tagsListModel = {
 }
 interface Window {
     tagList: tag[]
+    recordList: RecordItem[]
     createTag: (string) => void
     removeTag: (string) => boolean
     updateTag: (id: string, name: string) => void
     findTag: (id: string) => Tag | undefined;
+    createRecord: (RecordItem) => void
 }
