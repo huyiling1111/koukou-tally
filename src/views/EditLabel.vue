@@ -41,15 +41,9 @@ export default class EditLabel extends Vue {
   created() {
     const id = this.$route.params.id;
     // console.log(`id:${id}`);
-    tagsListModel.fetch();
-    const tags = tagsListModel.data;
-    // console.log(`tags:${tags}`);
-    const tag = tags.filter((item) => item.id === id)[0];
-    // console.log(`tag:${tag}`);
-    if (tag) {
-      this.editTag = tag;
-      // console.log(tag);
-    } else {
+
+    this.editTag = window.findTag(id);
+    if (!this.editTag) {
       this.$router.replace("/404");
     }
   }

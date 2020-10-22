@@ -25,4 +25,5 @@ interface Window {
     createTag: (string) => void
     removeTag: (string) => boolean
     updateTag: (id: string, name: string) => void
+    findTag: (id: string) => Tag | undefined;
 }
