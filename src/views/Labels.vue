@@ -22,17 +22,22 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import tagsListModel from "@/model/tagsListModel.ts";
+// import tagsListModel from "@/model/tagsListModel.ts";
 import Button from "@/components/Button.vue";
-tagsListModel.fetch();
+import tagStore from "@/store/tagStore.ts";
+
 @Component({
   components: { Button },
 })
 export default class Labels extends Vue {
-  tagsList = window.tagList;
+  tagsList = tagStore.tagList;
   createTag() {
     const name = window.prompt("请输入想要新增的标签");
-    window.createTag(name);
+    if (name) {
+      tagStore.createTag(name);
+    } else {
+      window.alert("不能为空");
+    }
   }
 }
 </script>

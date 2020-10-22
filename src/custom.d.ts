@@ -20,12 +20,16 @@ type tagsListModel = {
     update: (id: string, name: string) => void
     remove: (id: string) => boolean
 }
+// type store = {
+//     tagList: tag[]
+//     recordList: RecordItem[]
+//     createTag: (string) => void
+//     removeTag: (string) => boolean
+//     updateTag: (id: string, name: string) => void
+//     findTag: (id: string) => Tag | undefined;
+//     createRecord: (RecordItem) => void
+
+// }
 interface Window {
-    tagList: tag[]
-    recordList: RecordItem[]
-    createTag: (string) => void
-    removeTag: (string) => boolean
-    updateTag: (id: string, name: string) => void
-    findTag: (id: string) => Tag | undefined;
-    createRecord: (RecordItem) => void
+
 }
