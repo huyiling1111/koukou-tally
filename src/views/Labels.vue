@@ -12,7 +12,7 @@
           ><Icons class="icon2" name="right" />
         </router-link>
       </div>
-      <Button @click="create">新建标签</Button>
+      <Button @click="createTag">新建标签</Button>
     </Layout>
   </div>
 </template>
@@ -30,18 +30,9 @@ tagsListModel.fetch();
 })
 export default class Labels extends Vue {
   tagsList = window.tagList;
-  create() {
-    const label = window.prompt("请输入想要新增的标签");
-    if (label) {
-      if (tagsListModel.create(label) === "repeat") {
-        alert("输入的标签名重复了");
-      } else {
-        tagsListModel.create(label);
-        //这里少了id
-      }
-    } else {
-      alert("不能为空");
-    }
+  createTag() {
+    const name = window.prompt("请输入想要新增的标签");
+    window.createTag(name);
   }
 }
 </script>
