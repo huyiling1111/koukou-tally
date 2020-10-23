@@ -23,18 +23,17 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import tagStore from "@/store/tagStore.ts";
 
-@Component({
-  computed: {
-    dataSource() {
-      return tagStore.fetchTag();
-    },
-  },
-})
+@Component({})
 export default class Tags extends Vue {
   selectTags: string[] = [];
-  dataSource = tagStore.fetchTag();
+
+  get dataSource() {
+    return this.$store.state.tagList;
+  }
+  beforeCreate() {
+    this.$store.commit("fetchTag");
+  }
 
   toggle(item: string) {
     if (this.selectTags.indexOf(item) > -1) {
@@ -47,7 +46,7 @@ export default class Tags extends Vue {
   create() {
     const name = window.prompt("请输入标签名");
     if (name) {
-      tagStore.createTag(name);
+      this.$store.commit("createTag", name);
     } else {
       window.alert("不能为空");
     }

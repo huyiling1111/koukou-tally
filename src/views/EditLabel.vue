@@ -28,28 +28,32 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Notes from "@/components/Money/Notes.vue";
 import Button from "@/components/Button.vue";
-import tagStore from "@/store/tagStore.ts";
+
 @Component({ components: { Notes, Button } })
 export default class EditLabel extends Vue {
-  editTag?: { id: string; name: string } = undefined;
+  get editTag() {
+    return this.$store.state.currentTag;
+  }
   update(value: string) {
     if (this.editTag) {
-      tagStore.updateTag(this.editTag.id, value);
+      this.$store.commit("updateTag", { id: this.editTag.id, name: value });
     }
   }
   created() {
     const id = this.$route.params.id;
     // console.log(`id:${id}`);
-
-    this.editTag = tagStore.findTag(id);
+    this.$store.commit("findTag", id);
     if (!this.editTag) {
       this.$router.replace("/404");
     }
   }
   remove() {
-    if (this.editTag && tagStore.removeTag(this.editTag.id)) {
-      window.alert("删除成功");
-      this.$router.replace("/labels");
+    if (this.editTag) {
+      this.$store.commit("removeTag", this.editTag.id);
+      if (this.$store.state.removeTagReturnValue) {
+        window.alert("删除成功");
+        this.$router.replace("/labels");
+      }
     } else {
       window.alert("删除失败");
     }

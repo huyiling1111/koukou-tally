@@ -24,17 +24,22 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 // import tagsListModel from "@/model/tagsListModel.ts";
 import Button from "@/components/Button.vue";
-import tagStore from "@/store/tagStore.ts";
-tagStore.fetchTag();
+
 @Component({
   components: { Button },
 })
 export default class Labels extends Vue {
-  tagsList = tagStore.tagList;
+  get tagsList() {
+    return this.$store.state.tagList;
+  }
+  beforeCreate() {
+    this.$store.commit("fetchTag");
+  }
+
   createTag() {
     const name = window.prompt("请输入想要新增的标签");
     if (name) {
-      tagStore.createTag(name);
+      this.$store.commit("createTag", name);
     } else {
       window.alert("不能为空");
     }

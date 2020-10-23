@@ -29,27 +29,24 @@ import Notes from "@/components/Money/Notes.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import tagStore from "@/store/tagStore";
 
 @Component({
   components: { Tags, Notes, Types, NumberPad },
-  computed: {
-    tags() {
-      return this.$store.state.tagList;
-    },
-    recordList() {
-      return this.$store.state.recordList;
-    },
-  },
 })
 export default class Money extends Vue {
-  tags = tagStore.tagList;
   comment = "备注:";
   placeHolder = "请输入备注哈内容";
   values = "";
 
   record: RecordItem = { tags: [], notes: "", type: "-", amount: 0 };
   // recordList = recordStore.recordList;
+
+  get tags() {
+    return this.$store.state.tagList;
+  }
+  get recordList() {
+    return this.$store.state.recordList;
+  }
 
   onUpdateTypes(value: string) {
     this.record.type = value;
@@ -65,6 +62,7 @@ export default class Money extends Vue {
     this.record.amount = parseFloat(value);
   }
   saveRecord() {
+    console.log(this.tags);
     this.$store.commit("createRecord", this.record);
   }
 }
