@@ -4,7 +4,7 @@ import Nav from '@/components/Nav.vue'
 import Layout from '@/components/Layout.vue'
 import Icons from '@/components/Icons.vue'
 import router from './router'
-import store from './store'
+import store from './store/index'
 
 
 Vue.config.productionTip = false
