@@ -3,13 +3,20 @@ type RecordItem = {
     notes: string
     type: string
     amount: number // 数据类型 object | string
-    createdAt?: Date  // 类 / 构造函数
+    createdAt?: string  // 类 / 构造函数
 }
 type tag = {
     id: string
     name: string
 }
-
+type rootState = {
+    recordList: RecordItem[]
+    tagList: tag[]
+    currentTag?: tag
+    createTagReturnValue?: "repeat" | "success" | "null"
+    removeTagReturnValue?: boolean
+    updateTagReturnValue?: "repeat" | "success" | "not found"
+}
 
 type tagsListModel = {
     localStorageKeyName: string

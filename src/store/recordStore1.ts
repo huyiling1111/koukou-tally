@@ -6,7 +6,7 @@ const recordStore = {
     recordList: [] as RecordItem[],
     createRecord(record: RecordItem) {
         const deepCloneRecord: RecordItem = deepClone(record)
-        deepCloneRecord.createdAt = new Date();
+        deepCloneRecord.createdAt = new Date().toISOString();
         this.recordList.push(deepCloneRecord)
         this.saveRecord(this.recordList)
 

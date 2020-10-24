@@ -4,14 +4,6 @@ import deepClone from '@/lib/deepClone';
 import createId from '@/lib/created'
 
 Vue.use(Vuex)
-type rootState = {
-  recordList: RecordItem[]
-  tagList: tag[]
-  currentTag?: tag
-  createTagReturnValue?: "repeat" | "success" | "null"
-  removeTagReturnValue?: boolean
-  updateTagReturnValue?: "repeat" | "success" | "not found"
-}
 
 
 
@@ -27,7 +19,7 @@ const store = new Vuex.Store({
   mutations: {
     createRecord(state, record: RecordItem) {
       const deepCloneRecord: RecordItem = deepClone(record)
-      deepCloneRecord.createdAt = new Date();
+      deepCloneRecord.createdAt = new Date().toISOString();
       state.recordList.push(deepCloneRecord)
       store.commit('saveRecord')
 
