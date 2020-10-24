@@ -16,10 +16,17 @@
         />
         <ol>
           <li v-for="(value, name) in result" :key="name">
-            {{ name }}
+            <h3 class="title">{{ beautify(name) }}</h3>
             <ol>
-              <li v-for="(item, index) in value.items" :key="index">
-                {{ item.amount }} {{ item.createdAt }}
+              <li
+                class="record"
+                v-for="(item, index) in value.items"
+                :key="index"
+              >
+                <!-- {{ item.createdAt }} -->
+                <span class="tags">{{ tagString(item.tags) }}</span>
+                <span class="notes">备注：{{ item.notes }}</span>
+                <span> ￥{{ item.amount }}</span>
               </li>
             </ol>
           </li>
@@ -36,9 +43,22 @@ import Vue from "vue";
 import Tabs from "@/components/Tabs.vue";
 import Types from "@/components/Money/Types.vue";
 import { Component } from "vue-property-decorator";
+import dayjs from "dayjs";
 
 @Component({ components: { Tabs, Types } })
 export default class Statistics extends Vue {
+  tagString(tag: tag[]) {
+    if (!tag[tag.length - 1]) {
+      return "无";
+    } else {
+      type s = string;
+      let s = "";
+      for (let i = 0; i < tag.length; i++) {
+        s += tag[i].name + " ";
+      }
+      return s;
+    }
+  }
   get recordList() {
     return (this.$store.state as rootState).recordList;
   }
@@ -72,6 +92,22 @@ export default class Statistics extends Vue {
   beforeCreate() {
     this.$store.commit("fetchRecord");
   }
+  beautify(string: string) {
+    const day = dayjs(string);
+    const now = dayjs();
+    if (day.isSame(now, "day")) {
+      return "今天";
+    } else if (day.isSame(now.subtract(1, "day"), "day")) {
+      console.log("hi");
+      return "昨天";
+    } else if (day.isSame(now.subtract(2, "day"), "day")) {
+      return "前天";
+    } else if (day.isSame(now, "year")) {
+      return day.format("M月D日");
+    } else {
+      return day.format("YYYY年M月D日");
+    }
+  }
 }
 </script>
 
@@ -81,6 +117,7 @@ export default class Statistics extends Vue {
 <style lang="scss" scoped>
 @import "~@/assets/styles/helper.scss";
 .content {
+  background: rgb(245, 245, 245);
   height: 100vh;
 }
 ::v-deep .type-tab-item {
@@ -101,5 +138,28 @@ export default class Statistics extends Vue {
       display: none;
     }
   }
+}
+
+%item {
+  padding: 6px 16px;
+  line-height: 28px;
+  display: flex;
+  justify-content: space-between;
+}
+.title {
+  @extend %item;
+}
+.tags {
+  white-space: nowrap;
+}
+.record {
+  background: white;
+  @extend %item;
+}
+.notes {
+  margin-right: auto;
+  margin-left: 16px;
+  word-break: break-all;
+  color: #999;
 }
 </style>
