@@ -38,7 +38,13 @@ export default class Money extends Vue {
   placeHolder = "请输入备注哈内容";
   values = "";
 
-  record: RecordItem = { tags: [], notes: "", type: "-", amount: 0 };
+  record: RecordItem = {
+    tags: [],
+    notes: "",
+    type: "-",
+    amount: 0,
+    createdAt: "",
+  };
   // recordList = recordStore.recordList;
 
   get tags() {

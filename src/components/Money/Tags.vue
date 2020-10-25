@@ -39,7 +39,7 @@ export default class Tags extends Vue {
     if (this.selectTags.indexOf(item) > -1) {
       this.selectTags.splice(this.selectTags.indexOf(item), 1);
     } else {
-      this.selectTags.push(item);
+      this.selectTags.length === 0 && this.selectTags.push(item);
     }
     this.$emit("update:selected", this.selectTags);
   }

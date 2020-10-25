@@ -8,15 +8,10 @@
           :value="type"
           v-on:update:value="type = $event"
         />
-        <Tabs
-          class-prefix="interval"
-          :data-source="array"
-          :value="interval"
-          v-on:update:value="interval = $event"
-        />
+
         <ol>
-          <li v-for="(value, name) in result" :key="name">
-            <h3 class="title">{{ beautify(name) }}</h3>
+          <li v-for="value in groupList" :key="value.title">
+            <h3 class="title">{{ beautify(value.title) }}</h3>
             <ol>
               <li
                 class="record"
@@ -32,6 +27,7 @@
           </li>
         </ol>
       </div>
+      <div>{{ groupList }}</div>
     </Layout>
   </div>
 </template>
@@ -44,6 +40,7 @@ import Tabs from "@/components/Tabs.vue";
 import Types from "@/components/Money/Types.vue";
 import { Component } from "vue-property-decorator";
 import dayjs from "dayjs";
+import deepClone from "@/lib/deepClone";
 
 @Component({ components: { Tabs, Types } })
 export default class Statistics extends Vue {
@@ -62,21 +59,43 @@ export default class Statistics extends Vue {
   get recordList() {
     return (this.$store.state as rootState).recordList;
   }
-  get result() {
-    type HashTableValue = { title: string; items: RecordItem[] };
-    const HashTable: { [key: string]: HashTableValue } = {};
+  get groupList() {
     const { recordList } = this;
-    for (let i = 0; i < recordList.length; i++) {
-      const [date, time] = recordList[i].createdAt!.split("T");
-      console.log(date);
-      HashTable[date] = HashTable[date] || { title: date, items: [] };
-      HashTable[date].items.push(recordList[i]);
+    console.log(recordList.map((item) => item.createdAt));
+    if (recordList.length === 0) {
+      return [];
     }
-    console.log(HashTable);
-    return HashTable;
+    const newRecordList: RecordItem[] = deepClone(recordList).sort(
+      (a: RecordItem, b: RecordItem) => {
+        return dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf();
+      }
+    );
+
+    const dateList = newRecordList.map((item) =>
+      dayjs(item.createdAt).format("YYYY-MM-DD")
+    );
+    const dateCount = Array.from(new Set(dateList)).length;
+    console.log(dateCount);
+    const result: Result = [{ title: "", items: [] }];
+
+    for (let j = 0; j < dateCount; j++) {
+      for (let i = 0; i < newRecordList.length; i++) {
+        if (
+          dateList[j] === dayjs(newRecordList[i].createdAt).format("YYYY-MM-DD")
+        ) {
+          result[j].title = dayjs(newRecordList[i].createdAt).format(
+            "YYYY-MM-DD"
+          );
+
+          result[j].items.push(newRecordList[i]);
+        }
+      }
+    }
+    console.log(result);
+    return result;
   }
   type = "-";
-  interval = "day";
+
   array2 = [
     {
       text: "支出",
@@ -84,11 +103,7 @@ export default class Statistics extends Vue {
     },
     { text: "收入", value: "+" },
   ];
-  array = [
-    { text: "按天", value: "day" },
-    { text: "按周", value: "week" },
-    { text: "按月", value: "month" },
-  ];
+
   beforeCreate() {
     this.$store.commit("fetchRecord");
   }
