@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout>
-      <div class="content">
+      <div class="content" :style="{ height: scrollerHeight }">
         <Types :value="record.type" v-on:update:value="onUpdateTypes" />
         <Tags
           :dataSource="tags"
@@ -52,6 +52,9 @@ export default class Money extends Vue {
   }
   get recordList() {
     return this.$store.state.recordList;
+  }
+  get scrollerHeight() {
+    return document.documentElement.clientHeight + "px";
   }
 
   onUpdateTypes(value: string) {

@@ -11,7 +11,10 @@
 
         <ol>
           <li v-for="value in groupList" :key="value.title">
-            <h3 class="title">{{ beautify(value.title) }}</h3>
+            <div class="day">
+              <h3 class="title">{{ beautify(value.title) }}</h3>
+              <h3 class="title">总计：￥{{ value.total }}</h3>
+            </div>
             <ol>
               <li
                 class="record"
@@ -63,20 +66,20 @@ export default class Statistics extends Vue {
     const { recordList } = this;
     console.log(recordList.map((item) => item.createdAt));
     if (recordList.length === 0) {
-      return [];
+      return [] as Result;
     }
-    const newRecordList: RecordItem[] = deepClone(recordList).sort(
-      (a: RecordItem, b: RecordItem) => {
+    const newRecordList: RecordItem[] = deepClone(recordList)
+      .filter((item: RecordItem) => item.type === this.type)
+      .sort((a: RecordItem, b: RecordItem) => {
         return dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf();
-      }
-    );
+      });
 
     const dateList = newRecordList.map((item) =>
       dayjs(item.createdAt).format("YYYY-MM-DD")
     );
     const dateCount = Array.from(new Set(dateList)).length;
     console.log(dateCount);
-    const result: Result = [{ title: "", items: [] }];
+    const result: Result = [{ title: "", items: [], total: 0 }];
 
     for (let j = 0; j < dateCount; j++) {
       for (let i = 0; i < newRecordList.length; i++) {
@@ -91,6 +94,11 @@ export default class Statistics extends Vue {
         }
       }
     }
+    result.forEach((group) => {
+      group.total = group.items.reduce(function (total, item) {
+        return total + item.amount;
+      }, 0);
+    });
     console.log(result);
     return result;
   }
@@ -176,5 +184,9 @@ export default class Statistics extends Vue {
   margin-left: 16px;
   word-break: break-all;
   color: #999;
+}
+.day {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

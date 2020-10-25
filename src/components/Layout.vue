@@ -1,12 +1,19 @@
 <template>
-  <div class="layout-wrapper">
+  <div class="layout-wrapper" :style="{ height: scrollerHeight }">
     <slot></slot>
     <Nav />
   </div>
 </template>
 
 <script lang="ts">
-export default {};
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
+@Component
+export default class App extends Vue {
+  get scrollerHeight() {
+    return document.documentElement.clientHeight + "px";
+  }
+}
 </script>
 
 <style lang="scss" scoped>

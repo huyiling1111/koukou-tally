@@ -1,4 +1,4 @@
-type Result = { title: string; items: RecordItem[] }[];
+type Result = { title: string; items: RecordItem[]; total: number }[];
 
 type RecordItem = {
     tags: string[];
