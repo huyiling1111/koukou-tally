@@ -30,7 +30,6 @@
           </li>
         </ol>
       </div>
-      <div>{{ groupList }}</div>
     </Layout>
   </div>
 </template>
@@ -47,6 +46,19 @@ import deepClone from "@/lib/deepClone";
 
 @Component({ components: { Tabs, Types } })
 export default class Statistics extends Vue {
+  beforeCreate() {
+    this.$store.commit("fetchRecord");
+  }
+  type = "-";
+
+  array2 = [
+    {
+      text: "支出",
+      value: "-",
+    },
+    { text: "收入", value: "+" },
+  ];
+
   tagString(tag: tag[]) {
     if (!tag[tag.length - 1]) {
       return "无";
@@ -75,10 +87,17 @@ export default class Statistics extends Vue {
       .sort((a: RecordItem, b: RecordItem) => {
         return dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf();
       });
-
+    if (newRecordList.length === 0) {
+      return [] as Result;
+    }
+    // if (!newRecordList) {
+    //   newRecordList = [
+    //     { tags: [], notes: "", type: "", amount: 0, createdAt: "" },
+    //   ];
+    // }
     const result: Result = [
       {
-        title: newRecordList[0].createdAt,
+        title: (newRecordList[0] && newRecordList[0].createdAt) || "",
         items: [newRecordList[0]],
         total: 0,
       },
@@ -101,28 +120,6 @@ export default class Statistics extends Vue {
     });
     return result;
   }
-
-  type = "-";
-
-  array2 = [
-    {
-      text: "支出",
-      value: "-",
-    },
-    { text: "收入", value: "+" },
-  ];
-
-  beforeCreate() {
-    this.$store.commit("fetchRecord");
-  }
-  mouted() {
-    if (this.type === "+" && this.groupList.length === 0) {
-      console.log(this.type);
-
-      this.$router.replace("/money");
-    }
-  }
-
   beautify(string: string) {
     const day = dayjs(string);
     const now = dayjs();

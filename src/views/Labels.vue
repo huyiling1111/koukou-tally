@@ -49,19 +49,23 @@ export default class Labels extends Vue {
 
 <style lang="scss" scoped>
 @import "~@/assets/styles/helper.scss";
+@import "~@/assets/styles/reset.scss";
 .labels {
   height: 100vh;
   font-size: 20px;
   display: flex;
   flex-direction: column;
   > .label {
-    background: white;
-    border-bottom: 1px solid #dad8d8e0;
+    color: rgb(145, 139, 139);
+
+    border-bottom: 1px solid rgb(204, 203, 203);
+
     padding: 0 16px;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
+
     .icon2 {
       width: 1.1em;
       height: 2em;

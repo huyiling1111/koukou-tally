@@ -1,7 +1,7 @@
 <template>
   <div class="nav">
     <router-link class="item" to="/labels" active-class="selected">
-      <Icons name="labels"></Icons>账单</router-link
+      <Icons name="labels"></Icons>修改标签</router-link
     >
     <router-link class="item" to="/money" active-class="selected">
       <Icons name="money"></Icons>记一笔</router-link
@@ -29,7 +29,8 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/styles/helper.scss";
 .nav {
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  box-shadow: 0 0 3px rgba(116, 109, 109, 1);
   display: flex;
   flex-direction: row;
   font-size: 12px;
@@ -40,6 +41,7 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    color: rgb(145, 139, 139);
   }
   .icon {
     width: 35px;

@@ -7,14 +7,14 @@
             ><Icons class="icon3" name="Left" /> </router-link
           ><span>编辑标签</span>
         </div>
-        <Notes
-          class="notes"
-          comment="标签名"
-          placeHolder="请输入标签名"
-          :value="editTag.name"
-          @update:value="update"
-        />
-
+        <div class="notes">
+          <Notes
+            comment="标签名"
+            placeHolder="请输入标签名"
+            :value="editTag.name"
+            @update:value="update"
+          />
+        </div>
         <div>
           <Button class="button" @click="remove">删除标签</Button>
         </div>

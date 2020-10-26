@@ -26,3 +26,10 @@ new Vue({
 
   render: h => h(App)
 }).$mount('#app')
+
+if (store.state.tagList.length === 0) {
+  store.commit('createTag', "衣")
+  store.commit('createTag', "食")
+  store.commit('createTag', "住")
+  store.commit('createTag', "行")
+}

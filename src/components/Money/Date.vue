@@ -1,11 +1,13 @@
 <template>
   <div>
-    <a-date-picker
-      @change="onChange"
-      :default-value="
-        defaultTime ? moment(defaultTime, 'YYYY-MM-DD') : undefined
-      "
-    />
+    <div class="date">
+      <a-date-picker
+        @change="onChange"
+        :default-value="
+          defaultTime ? moment(defaultTime, 'YYYY-MM-DD') : undefined
+        "
+      />
+    </div>
   </div>
 </template>
 
@@ -30,5 +32,11 @@ export default class Date extends Vue {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.date {
+  width: 120px;
+  font-size: 11px;
+  height: 32px;
+  z-index: 0;
+}
 </style>

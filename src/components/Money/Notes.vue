@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="dateNodes">
+    <slot></slot>
     <div class="nodes">
-      <span class="name"> {{ comment }}</span>
+      <div class="name">✍</div>
       <input
         type="text"
         :placeholder="placeHolder"
@@ -28,20 +29,33 @@ export default class Notes extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.nodes {
-  font-size: 14px;
-  background: white;
-  padding-left: 16px;
+.dateNodes {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+}
+.nodes {
+  flex-grow: 1;
+  font-size: 14px;
+  // background: red;
+
+  // // border: 1px solid rgb(145, 139, 139);
+  // box-shadow: -1px -1px 1px rgba(0, 0, 0, 0.25);
+  display: flex;
+  height: 30px;
+  justify-content: space-between;
+  // padding-top: 2px;
+  // padding-left: 10px;
+  align-items: flex-end;
+
   > .name {
-    padding-right: 16px;
+    margin-left: 50px;
   }
   > input {
     border: none;
-    padding-right: 16px;
+
     background: transparent;
     flex-grow: 1;
+    color: rgb(209, 205, 205);
   }
   height: 30px;
 }

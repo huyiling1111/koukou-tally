@@ -46,25 +46,21 @@ export default class Tabs extends Vue {
 <style lang="scss" scoped>
 @import "~@/assets/styles/helper.scss";
 .tabs {
-  background: #c4c4c4;
+  background: white;
   display: flex;
   text-align: center;
   font-size: 24px;
   > li {
+    background: white;
+    color: orange;
     width: 50%;
     height: 64px;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    &.selected::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: #333;
+    &.selected {
+      color: white;
+      background: orange;
     }
   }
 }

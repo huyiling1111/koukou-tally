@@ -2,7 +2,6 @@
   <div>
     <Layout>
       <div class="content" :style="{ height: scrollerHeight }">
-        <Date v-on:update:date="onUpdateDate" />
         <Types
           :value="record.type"
           v-on:update:value="onUpdateTypes"
@@ -14,15 +13,23 @@
           v-on:update:createTag="tags = $event"
           v-on:update:selected="onUpdateTags"
         />
-        <Notes
-          :comment="comment"
-          :placeHolder="placeHolder"
-          v-on:update:value="onUpdateNotes"
-          :value="values"
+        <div class="notes">
+          <Notes
+            :comment="comment"
+            :placeHolder="placeHolder"
+            v-on:update:value="onUpdateNotes"
+            :value="values"
+          >
+            <Date v-on:update:date="onUpdateDate" />
+          </Notes>
+        </div>
+
+        <NumberPad
+          v-on:update:value="onUpdateNumberPad"
+          @submit="saveRecord"
+          class="numberPad"
         />
-        <NumberPad v-on:update:value="onUpdateNumberPad" @submit="saveRecord" />
       </div>
-      {{ record }}
     </Layout>
   </div>
 </template>
@@ -41,7 +48,7 @@ import { Component } from "vue-property-decorator";
 })
 export default class Money extends Vue {
   comment = "备注:";
-  placeHolder = "请输入备注哈内容";
+  placeHolder = "请在这里输入备注........";
   values = "";
 
   record: RecordItem = {
@@ -86,7 +93,11 @@ export default class Money extends Vue {
   }
   saveRecord() {
     console.log(this.tags);
+
     this.$store.commit("createRecord", this.record);
+    if (this.record.createdAt) {
+      window.confirm("保存成功");
+    }
   }
 }
 </script>
@@ -101,5 +112,12 @@ export default class Money extends Vue {
 }
 .type1 {
   flex-grow: 1;
+}
+.numberPad {
+  z-index: 10;
+}
+.notes {
+  // box-shadow: -1px -1px 1px rgba(0, 0, 0, 0.25);
+  border-bottom-color: transparent;
 }
 </style>
