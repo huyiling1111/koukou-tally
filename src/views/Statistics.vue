@@ -68,30 +68,30 @@ export default class Statistics extends Vue {
     if (recordList.length === 0) {
       return [] as Result;
     }
+    console.log(this.type);
+    console.log(recordList);
     const newRecordList: RecordItem[] = deepClone(recordList)
       .filter((item: RecordItem) => item.type === this.type)
       .sort((a: RecordItem, b: RecordItem) => {
         return dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf();
       });
 
-    const dateList = newRecordList.map((item) =>
-      dayjs(item.createdAt).format("YYYY-MM-DD")
-    );
-    const dateCount = Array.from(new Set(dateList)).length;
-    console.log(dateCount);
-    const result: Result = [{ title: "", items: [], total: 0 }];
+    const result: Result = [
+      {
+        title: newRecordList[0].createdAt,
+        items: [newRecordList[0]],
+        total: 0,
+      },
+    ];
+    console.log(result);
 
-    for (let j = 0; j < dateCount; j++) {
-      for (let i = 0; i < newRecordList.length; i++) {
-        if (
-          dateList[j] === dayjs(newRecordList[i].createdAt).format("YYYY-MM-DD")
-        ) {
-          result[j].title = dayjs(newRecordList[i].createdAt).format(
-            "YYYY-MM-DD"
-          );
-
-          result[j].items.push(newRecordList[i]);
-        }
+    for (let i = 0; i < newRecordList.length; i++) {
+      const current = newRecordList[i];
+      const last = result[result.length - 1];
+      if (current.createdAt === last.title) {
+        last.items.push(current);
+      } else {
+        result.push({ title: current.createdAt, items: [current], total: 0 });
       }
     }
     result.forEach((group) => {
@@ -99,9 +99,9 @@ export default class Statistics extends Vue {
         return total + item.amount;
       }, 0);
     });
-    console.log(result);
     return result;
   }
+
   type = "-";
 
   array2 = [
@@ -115,6 +115,14 @@ export default class Statistics extends Vue {
   beforeCreate() {
     this.$store.commit("fetchRecord");
   }
+  mouted() {
+    if (this.type === "+" && this.groupList.length === 0) {
+      console.log(this.type);
+
+      this.$router.replace("/money");
+    }
+  }
+
   beautify(string: string) {
     const day = dayjs(string);
     const now = dayjs();

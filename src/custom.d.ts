@@ -20,15 +20,15 @@ type rootState = {
     updateTagReturnValue?: "repeat" | "success" | "not found";
 }
 
-type tagsListModel = {
-    localStorageKeyName: string;
-    data: tag[];
-    create: (label: string) => 'repeat' | 'success';
-    fetch: () => tag[];
-    save: (data: tag[]) => void;
-    update: (id: string, name: string) => void;
-    remove: (id: string) => boolean;
-}
+// type tagsListModel = {
+//     localStorageKeyName: string;
+//     data: tag[];
+//     create: (label: string) => 'repeat' | 'success';
+//     fetch: () => tag[];
+//     save: (data: tag[]) => void;
+//     update: (id: string, name: string) => void;
+//     remove: (id: string) => boolean;
+// }
 // type store = {
 //     tagList: tag[]
 //     recordList: RecordItem[]
@@ -39,3 +39,8 @@ type tagsListModel = {
 //     createRecord: (RecordItem) => void
 
 // }
+type MyTagList = Tag[]
+
+type TagList = {
+    [key: string]: Tag[];
+}

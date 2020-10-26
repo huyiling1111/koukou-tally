@@ -19,9 +19,12 @@ const store = new Vuex.Store({
   mutations: {
     createRecord(state, record: RecordItem) {
       const deepCloneRecord: RecordItem = deepClone(record)
-      deepCloneRecord.createdAt = new Date().toISOString();
-      state.recordList.push(deepCloneRecord)
-      store.commit('saveRecord')
+      if (deepCloneRecord.createdAt) {
+        state.recordList.push(deepCloneRecord)
+        store.commit('saveRecord')
+      } else {
+        window.alert('请选择日期')
+      }
 
     },
     fetchRecord(state) {
@@ -71,7 +74,7 @@ const store = new Vuex.Store({
         state.removeTagReturnValue = false
       }
     },
-    updateTag(state, object: { id: string, name: string }) {
+    updateTag(state, object: { id: string; name: string }) {
       const { id, name } = object
       if (state.tagList.map(item => item.id).indexOf(id) > -1) {
         const names = state.tagList.map(item => item.name)

@@ -32,6 +32,9 @@ export default class Tabs extends Vue {
     this.$emit("update:value", data.value);
   }
   liClass(item: DataSourceItem) {
+    console.log(item.value);
+    console.log("----");
+    console.log(this.value);
     return {
       selected: item.value === this.value,
       [this.classPrefix + "-tab-item"]: this.classPrefix,

@@ -5,7 +5,12 @@ import Layout from '@/components/Layout.vue'
 import Icons from '@/components/Icons.vue'
 import router from './router'
 import store from './store/index'
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 
+
+// 局部引入
 
 Vue.config.productionTip = false
 Vue.component('Nav', Nav)

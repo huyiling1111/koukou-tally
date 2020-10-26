@@ -2,7 +2,12 @@
   <div>
     <Layout>
       <div class="content" :style="{ height: scrollerHeight }">
-        <Types :value="record.type" v-on:update:value="onUpdateTypes" />
+        <Date v-on:update:date="onUpdateDate" />
+        <Types
+          :value="record.type"
+          v-on:update:value="onUpdateTypes"
+          v-on:update:date="onUpdateDate"
+        />
         <Tags
           :dataSource="tags"
           class="type1"
@@ -24,6 +29,7 @@
 
 <script lang="ts">
 import Types from "@/components/Money/Types.vue";
+import Date from "@/components/Money/Date.vue";
 import Tags from "@/components/Money/Tags.vue";
 import Notes from "@/components/Money/Notes.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
@@ -31,7 +37,7 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 
 @Component({
-  components: { Tags, Notes, Types, NumberPad },
+  components: { Tags, Notes, Types, NumberPad, Date },
 })
 export default class Money extends Vue {
   comment = "备注:";
@@ -69,6 +75,14 @@ export default class Money extends Vue {
   }
   onUpdateNumberPad(value: string) {
     this.record.amount = parseFloat(value);
+  }
+  onUpdateDate(value: string) {
+    console.log(value, 1);
+    if (value) {
+      this.record.createdAt = value;
+    } else {
+      window.alert("请选择日期");
+    }
   }
   saveRecord() {
     console.log(this.tags);
