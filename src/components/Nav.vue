@@ -29,6 +29,7 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/styles/helper.scss";
 .nav {
+  margin-bottom: 0px;
   z-index: 10;
   box-shadow: 0 0 3px rgba(116, 109, 109, 1);
   display: flex;

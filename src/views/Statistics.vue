@@ -9,7 +9,7 @@
           v-on:update:value="type = $event"
         />
 
-        <ol>
+        <ol class="amount">
           <li v-for="value in groupList" :key="value.title">
             <div class="day">
               <h3 class="title">{{ beautify(value.title) }}</h3>
@@ -193,5 +193,10 @@ export default class Statistics extends Vue {
 .day {
   display: flex;
   justify-content: space-between;
+}
+.amount {
+  max-height: 70vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 </style>

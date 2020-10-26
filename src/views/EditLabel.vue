@@ -65,7 +65,7 @@ export default class EditLabel extends Vue {
 .content {
   background: rgb(248, 248, 248);
   font-size: 24px;
-  height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   > .editTag {
