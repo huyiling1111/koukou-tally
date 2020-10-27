@@ -12,6 +12,7 @@ type tag = {
     name: string;
 }
 type rootState = {
+
     recordList: RecordItem[];
     tagList: tag[];
     currentTag?: tag;

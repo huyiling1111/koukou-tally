@@ -17,6 +17,8 @@ const store = new Vuex.Store({
     updateTagReturnValue: undefined
   } as rootState,
   mutations: {
+
+
     createRecord(state, record: RecordItem) {
       const deepCloneRecord: RecordItem = deepClone(record)
       if (deepCloneRecord.createdAt) {
@@ -27,6 +29,7 @@ const store = new Vuex.Store({
       }
 
     },
+
     fetchRecord(state) {
       state.recordList = JSON.parse(window.localStorage.getItem("recordList") || '[]') as RecordItem[];
 
@@ -98,6 +101,7 @@ const store = new Vuex.Store({
     },
     saveTag(state) {
       window.localStorage.setItem("tagsList", JSON.stringify(state.tagList))
+
 
     }
 

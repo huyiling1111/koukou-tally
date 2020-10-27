@@ -8,27 +8,32 @@
           :value="type"
           v-on:update:value="type = $event"
         />
+        <div class="amount">
+          <div class="chart-wrapper" ref="chartWrapper">
+            <Chart class="chart" :options="chartOptions" />
+          </div>
 
-        <ol class="amount">
-          <li v-for="value in groupList" :key="value.title">
-            <div class="day">
-              <h3 class="title">{{ beautify(value.title) }}</h3>
-              <h3 class="title">总计：￥{{ value.total }}</h3>
-            </div>
-            <ol>
-              <li
-                class="record"
-                v-for="(item, index) in value.items"
-                :key="index"
-              >
-                <!-- {{ item.createdAt }} -->
-                <span class="tags">{{ tagString(item.tags) }}</span>
-                <span class="notes">备注：{{ item.notes }}</span>
-                <span> ￥{{ item.amount }}</span>
-              </li>
-            </ol>
-          </li>
-        </ol>
+          <ol>
+            <li v-for="value in groupList" :key="value.title">
+              <div class="day">
+                <h3 class="title">{{ beautify(value.title) }}</h3>
+                <h3 class="title">总计：￥{{ value.total }}</h3>
+              </div>
+              <ol>
+                <li
+                  class="record"
+                  v-for="(item, index) in value.items"
+                  :key="index"
+                >
+                  <!-- {{ item.createdAt }} -->
+                  <span class="tags">{{ tagString(item.tags) }}</span>
+                  <span class="notes">备注：{{ item.notes }}</span>
+                  <span> ￥{{ item.amount }}</span>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </div>
       </div>
     </Layout>
   </div>
@@ -40,15 +45,19 @@
 import Vue from "vue";
 import Tabs from "@/components/Tabs.vue";
 import Types from "@/components/Money/Types.vue";
-import { Component } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 import dayjs from "dayjs";
 import deepClone from "@/lib/deepClone";
+import Chart from "@/components/Chart.vue";
+import _ from "lodash";
+import day from "dayjs";
 
-@Component({ components: { Tabs, Types } })
+@Component({ components: { Tabs, Types, Chart } })
 export default class Statistics extends Vue {
   beforeCreate() {
     this.$store.commit("fetchRecord");
   }
+
   type = "-";
 
   array2 = [
@@ -80,8 +89,6 @@ export default class Statistics extends Vue {
     if (recordList.length === 0) {
       return [] as Result;
     }
-    console.log(this.type);
-    console.log(recordList);
     const newRecordList: RecordItem[] = deepClone(recordList)
       .filter((item: RecordItem) => item.type === this.type)
       .sort((a: RecordItem, b: RecordItem) => {
@@ -90,11 +97,6 @@ export default class Statistics extends Vue {
     if (newRecordList.length === 0) {
       return [] as Result;
     }
-    // if (!newRecordList) {
-    //   newRecordList = [
-    //     { tags: [], notes: "", type: "", amount: 0, createdAt: "" },
-    //   ];
-    // }
     const result: Result = [
       {
         title: (newRecordList[0] && newRecordList[0].createdAt) || "",
@@ -102,8 +104,6 @@ export default class Statistics extends Vue {
         total: 0,
       },
     ];
-    console.log(result);
-
     for (let i = 0; i < newRecordList.length; i++) {
       const current = newRecordList[i];
       const last = result[result.length - 1];
@@ -120,6 +120,12 @@ export default class Statistics extends Vue {
     });
     return result;
   }
+  @Watch("groupList")
+  onChange() {
+    console.log(0);
+    this.$store.state.groupList = this.groupList;
+    console.log(this.$store.state.groupList);
+  }
   beautify(string: string) {
     const day = dayjs(string);
     const now = dayjs();
@@ -135,6 +141,82 @@ export default class Statistics extends Vue {
     } else {
       return day.format("YYYY年M月D日");
     }
+  }
+  get keyValueList() {
+    const today = new Date();
+    const array = [];
+    console.log(this.groupList);
+    for (let i = 0; i <= 10; i++) {
+      // this.recordList = [{date:7.3, value:100}, {date:7.2, value:200}]
+      const dateString = day(today).subtract(i, "day").format("YYYY-MM-DD");
+      const found = _.find(this.groupList, {
+        title: dateString,
+      });
+      array.push({
+        key: dateString,
+        value: found ? found.total : 0,
+      });
+    }
+    array.sort((a, b) => {
+      if (a.key > b.key) {
+        return 1;
+      } else if (a.key === b.key) {
+        return 0;
+      } else {
+        return -1;
+      }
+    });
+    console.log("array");
+    console.log(array);
+    return array;
+  }
+  get chartOptions() {
+    const keys = this.keyValueList.map((item) => item.key);
+    const values = this.keyValueList.map((item) => item.value);
+    console.log("values");
+    console.log(values);
+    return {
+      grid: {
+        left: 10,
+        right: 0,
+      },
+      xAxis: {
+        type: "category",
+        data: keys,
+        axisTick: { alignWithLabel: true },
+        axisLine: { lineStyle: { color: "#666" } },
+        axisLabel: {
+          formatter: function (value: string, index: number) {
+            return value.substr(5);
+          },
+        },
+      },
+      yAxis: {
+        name: "金额",
+        nameLocation: "center",
+        type: "value",
+        show: false,
+      },
+      series: [
+        {
+          symbol: "circle",
+          symbolSize: 12,
+          itemStyle: { borderWidth: 1, color: "#666", borderColor: "#666" },
+          // lineStyle: {width: 10},
+          data: values,
+          type: "line",
+        },
+      ],
+      tooltip: {
+        show: true,
+        triggerOn: "click",
+        position: "top",
+        formatter: " {c0}",
+        axisPointer: {
+          axis: "auto",
+        },
+      },
+    };
   }
 }
 </script>
@@ -195,7 +277,7 @@ export default class Statistics extends Vue {
   justify-content: space-between;
 }
 .amount {
-  max-height: 70vh;
+  max-height: 80vh;
   overflow-x: hidden;
   overflow-y: scroll;
 }

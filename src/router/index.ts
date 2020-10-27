@@ -3,7 +3,7 @@ import Label from "@/views/Labels.vue";
 import Statistics from "@/views/Statistics.vue";
 import Notfound from "@/views/Notfound.vue";
 import EditLabel from "@/views/EditLabel.vue";
-
+import Chart from "@/views/Chart.vue";
 import Vue from "vue";
 import VueRouter from "vue-router";
 
@@ -18,6 +18,7 @@ const routes = [
     path: "/money",
     component: Money,
   },
+
   {
     path: "/labels",
     component: Label,
